@@ -4,6 +4,8 @@ import { NavLink} from 'react-router-dom';
 
 const LinkWrapper = props =>{
     return(
-        <NavLink activeStyle={{frontWeight: "bold"}} {...props}/>
+        <NavLink activeStyle={{fontWeight: "bold"}} {...props}/>
     );
 }
+
+export default LinkWrapper;
