@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import Header from './Header';
 import DataTable from './DataTable';
 import ApiService from './ApiService';
+import PopUp from './PopUp';
 
 
 class Livros extends Component {
@@ -16,9 +17,14 @@ class Livros extends Component {
 
     componentDidMount(){
       ApiService.ListaLivros()
+              .then(res => ApiService.TrataErros(res))
               .then(res => {
-                this.setState({livros: [...this.state.livros, ...res.data]});
-              });
+                if(res.message === 'success'){
+                    PopUp.exibeMensagem('success', 'Livros listados com sucesso');
+                    this.setState({livros: [...this.state.livros, ...res.data]});
+                }
+              })
+              .catch(err => PopUp.exibeMensagem('error', 'Falha na comunicação com a API ao listar os livros'));
     }
 
     render() {
