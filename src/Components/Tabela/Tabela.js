@@ -6,36 +6,57 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 
-class Tabela extends Component{
+const CellDeleta = ({removeDados, id}) => {
+  if(!removeDados) {
+    return null
+  }
 
-    render(){
-        const { autores, removeAutor } = this.props;
+    return (
+      <TableCell>
+        <Button variant="contained" color="primary" onClick = { () => {removeDados(id)}}>Remover</Button>
+      </TableCell>
+    )
+}
+
+const TituloDeleta = ({removeDados}) => {
+  if(!removeDados) {
+    return null
+  }
+  return <TableCell>Remover</TableCell>
+
+}
+
+const Tabela = props => {
+
+        const { campos, dados, removeDados } = props;
 
         return(
           <Table >
               <TableHead>
                 <TableRow>
-                  <TableCell>Autores</TableCell>
-                  <TableCell>Livros</TableCell>
-                  <TableCell>Preços</TableCell>
-                  <TableCell>Apagar</TableCell>
+                  {
+                    campos.map((campo) => (
+                      <TableCell>{campo.titulo}</TableCell>
+                    ))
+                  }
+                  <TituloDeleta removeDados ={removeDados} />
                 </TableRow>
               </TableHead>              
               <TableHead />
               <TableBody>
                 {
-                      autores.map(autor => (
-                      <TableRow key={autor.id}>
-                          <TableCell>{autor.nome}</TableCell>
-                          <TableCell>{autor.livro}</TableCell>
-                          <TableCell>{autor.preco}</TableCell>
-                          <td><Button variant="contained" color="primary" onClick = { () => {removeAutor(autor.id)}}>Remover</Button></td>
+                      dados.map(dados => (
+                      <TableRow key={dados.id}>
+                            {campos.map(campo => (
+                              <TableCell>{dados[campo.dado]}</TableCell>
+                        ))}
+                          <CellDeleta id={dados.id} removeDados={removeDados} />     
                       </TableRow>
               ))}
               </TableBody>
           </Table>
         );
-    }
 }
+
 
 export default Tabela;

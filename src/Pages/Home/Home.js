@@ -60,16 +60,23 @@ class Home extends Component {
   }
 
   render() {
-    return (
-      <Fragment>
-        <Header />
-        <div className="container mb-10">
-          <h1>Casa do código</h1>
-          <Tabela autores={this.state.autores} removeAutor={this.removeAutor} />
-          <Formulario escutadorDeSubmit={this.escutadorDeSubmit} />
-        </div>
-      </Fragment>
-    );
+    const campos = [{titulo: 'Autores', dado: 'nome'},
+                    {titulo:'Livros', dado: 'livro'},
+                    {titulo: 'Preços', dado: 'preco'}
+  ]   
+      return (
+        <Fragment>
+          <Header />
+          <div className="container mb-10">
+            <h1>Casa do código</h1>
+            <Tabela 
+                campos={campos} 
+                dados={this.state.autores} 
+                removeDados={this.removeAutor} />
+            <Formulario escutadorDeSubmit={this.escutadorDeSubmit} />
+          </div>
+        </Fragment>
+      );
   }
 }
 
